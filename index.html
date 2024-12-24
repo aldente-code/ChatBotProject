@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>簡単なチャットボット</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+        #chatbox {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #fff;
+        }
+        #messages {
+            height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        #messages .message {
+            margin-bottom: 10px;
+        }
+        #messages .user {
+            text-align: right;
+            color: #007bff;
+        }
+        #messages .bot {
+            text-align: left;
+            color: #555;
+        }
+        #inputArea {
+            display: flex;
+        }
+        #inputArea input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        #inputArea button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #inputArea button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div id="chatbox">
+        <h2>簡単なチャットボット</h2>
+        <div id="messages"></div>
+        <div id="inputArea">
+            <input type="text" id="userInput" placeholder="メッセージを入力してください...">
+            <button onclick="sendMessage()">送信</button>
+        </div>
+    </div>
+
+    <script>
+        const messages = document.getElementById('messages');
+
+        function sendMessage() {
+            const userInput = document.getElementById('userInput');
+            const userMessage = userInput.value.trim();
+
+            if (userMessage === '') {
+                return;
+            }
+
+            // ユーザーのメッセージを表示
+            addMessage(userMessage, 'user');
+
+            // チャットボットの応答を生成
+            const botResponse = getBotResponse(userMessage);
+            addMessage(botResponse, 'bot');
+
+            // 入力フィールドをクリア
+            userInput.value = '';
+        }
+
+        function addMessage(text, sender) {
+            const message = document.createElement('div');
+            message.className = `message ${sender}`;
+            message.textContent = text;
+            messages.appendChild(message);
+
+            // スクロールを一番下に
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        function getBotResponse(input) {
+            // 簡単な応答ロジック
+            if (input.includes('こんにちは')) {
+                return 'こんにちは！今日はどのようにお手伝いできますか？';
+            } else if (input.includes('天気')) {
+                return '今日の天気は晴れです！';
+            } else if (input.includes('ありがとう')) {
+                return 'どういたしまして！';
+            } else {
+                return 'すみません、よく分かりません。';
+            }
+        }
+    </script>
+</body>
+</html>
